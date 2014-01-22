@@ -14,7 +14,7 @@ func main(){
 	con.Read(cd)
 	fmt.Printf("%s",cd)
 	
-	msg:= "Connect to: 129.241.187.159:34933\x00"	
+	msg:= "Connect to: 129.241.187.159:12001\x00"	
 	con.Write([]byte(msg))
 	
 	stop :=0
@@ -28,4 +28,20 @@ func main(){
 		con.Read(cd)
 		fmt.Printf("%s",cd)
 	}
+	server()
+}
+
+
+func server(){
+    ln,err:=net.ListenTCP("tcp",nil)
+    if err !=nil{
+    }
+    for {
+        conn,err:=ln.Accept()
+        go handleconnection(conn)
+    }
+}
+
+func handleconnection(client net.Conn){
+    client.Write([]byte("hei der!!\n\x00"))
 }
