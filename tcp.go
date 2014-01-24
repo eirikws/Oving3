@@ -2,10 +2,14 @@ package main
 import "net"
 import "fmt"
 
-func main(){
-	ipAdr := "129.241.187.161"
+\\test
 
-	serverAddr, err := net.ResolveTCPAddr("tcp",ipAdr+":"+"34933")
+
+func main(){
+    runtime.GOMAXPROX(runtime.NumCPU())
+	ipAdrServ := "129.241.187.161"
+
+	serverAddr, err := net.ResolveTCPAddr("tcp",ipAdrServ+":"+"34933")
 	con, err := net.DialTCP("tcp", nil, serverAddr);
 	if err != nil {
 		// handle error
@@ -33,6 +37,7 @@ func main(){
 
 
 func server(){
+    servAddr,err:=net.ResolveTCPAddr("tcp",
     ln,err:=net.ListenTCP("tcp",nil)
     if err !=nil{
     }
