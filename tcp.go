@@ -9,7 +9,7 @@ const myPort="12001"
 const ipAddrThisPC="129.241.187.147"
 const serverPort="34933"
 
-
+\\LOL
 func main(){
     runtime.GOMAXPROCS(runtime.NumCPU())
     go server()
