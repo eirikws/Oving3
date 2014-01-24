@@ -5,7 +5,7 @@ import (
         "fmt"
         "runtime"
 )
-const MY_IP= "129.241.187.159"
+const MY_IP= "129.241.187.147"
 const TARGET_IP = "129.241.187.255"
 const TARGET_PORT = "20011"
 const LISTEN_PORT = "30011"
