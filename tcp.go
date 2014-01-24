@@ -1,15 +1,19 @@
 package main
-import "net"
-import "fmt"
-
-\\test
+import(
+    "net"
+    "fmt"
+    "runtime"
+)
+const ipAdrServ="129.241.187.161"
+const myPort="12001"
+const ipAddrThisPC="129.241.187.147"
+const serverPort="34933"
 
 
 func main(){
-    runtime.GOMAXPROX(runtime.NumCPU())
-	ipAdrServ := "129.241.187.161"
-
-	serverAddr, err := net.ResolveTCPAddr("tcp",ipAdrServ+":"+"34933")
+    runtime.GOMAXPROCS(runtime.NumCPU())
+    go server()
+	serverAddr, err := net.ResolveTCPAddr("tcp",ipAdrServ+":"+serverPort)
 	con, err := net.DialTCP("tcp", nil, serverAddr);
 	if err != nil {
 		// handle error
@@ -17,36 +21,34 @@ func main(){
 	cd := make([]byte,1024)
 	con.Read(cd)
 	fmt.Printf("%s",cd)
-	
-	msg:= "Connect to: 129.241.187.159:12001\x00"	
+	msg:= "Connect to: "+ipAddrThisPC+":"+myPort+"\x00"
 	con.Write([]byte(msg))
 	
-	stop :=0
-	for stop !=-1{
-		input := ""
-		fmt.Scanf("%s",&input)
-		if input=="stop"{
-			stop=-1
-		}
-		con.Write([]byte(input+"\x00"))
-		con.Read(cd)
-		fmt.Printf("%s",cd)
-	}
-	server()
+//	stop :=0
+//	for stop !=-1{
+//		input := ""
+//		fmt.Scanf("%s",&input)
+//		if input=="stop"{
+//			stop=-1
+//		}
+//		con.Write([]byte(input+"\x00"))
+//		con.Read(cd)
+//		fmt.Printf("%s\n",cd)
+//	}
 }
 
 
 func server(){
-    servAddr,err:=net.ResolveTCPAddr("tcp",
-    ln,err:=net.ListenTCP("tcp",nil)
+    in,err:=net.Listen("tcp",":"+myPort)
     if err !=nil{
     }
+    msg:=make([]byte,1024)
     for {
-        conn,err:=ln.Accept()
-        go handleconnection(conn)
+        conn,err:=in.Accept()
+        if err!=nil{
+        }
+        conn.Read(msg)
+        fmt.Printf("%s",msg)
     }
 }
 
-func handleconnection(client net.Conn){
-    client.Write([]byte("hei der!!\n\x00"))
-}
